@@ -1,0 +1,22 @@
+/* Base Application Styles */
+@import "../../node_modules/flexboxgrid-sass/flexboxgrid";
+
+html, body, #container, .main {
+  min-height: 100%;
+  height: 100%;
+}
+
+h1, h2 {
+  color: #064789;
+}
+
+.comment {
+  margin: 1em 0;
+  padding: 0.5em;
+  background: #EBF2FA;
+  border-radius: 3px;
+  &-author {
+    margin: 0.5em 0;
+    font-size: 1.2em;
+  }
+}

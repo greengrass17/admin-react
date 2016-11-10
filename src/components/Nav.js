@@ -10,6 +10,7 @@ class Nav extends React.Component {
 
           <ul className="col-md-2">
             <li><Link to="/">Comment Box</Link></li>
+            <li><Link to="/login">Logout</Link></li>
           </ul>
         </div>
 
