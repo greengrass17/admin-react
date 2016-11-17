@@ -6,7 +6,7 @@ import {Router, Route, hashHistory, IndexRoute} from 'react-router';
 import request from 'superagent';
 
 import Nav from './Nav';
-import CommentBoxWrapper from './CommentBoxWrapper';
+import CommentBox from './CommentBox';
 import Login from './LoginComponent';
 
 let yeomanImage = require('../images/yeoman.png');
@@ -15,7 +15,8 @@ class AppComponent extends React.Component {
   constructor() {
     super();
     this.state = { user: {} };
-    this.getNavComp = this.getNavComp.bind(this);
+    this.getCommentBox = this.getCommentBox.bind(this);
+    this.getNav = this.getNav.bind(this);
     this.requireAuth = this.requireAuth.bind(this);
     this.logout = this.logout.bind(this);
   }
@@ -25,16 +26,19 @@ class AppComponent extends React.Component {
       <Router history={hashHistory}>
         <Route name="login" path="/login" component={Login} onEnter={this.logout}></Route>
         {/* hot fix for hook.length == 0 */}
-        <Route name="app" path="/" getComponent={this.getNavComp} onEnter={(nextState, replace, cb) => this.requireAuth(nextState, replace, cb)}>
+        <Route name="app" path="/" getComponent={this.getNav} onEnter={(nextState, replace, cb) => this.requireAuth(nextState, replace, cb)}>
           {/* add the routes here */}
-          <IndexRoute component={CommentBoxWrapper}></IndexRoute>
+          <IndexRoute getComponent={this.getCommentBox}></IndexRoute>
         </Route>
       </Router>
     );
   }
 
-  getNavComp(nextState, callback) {
-    console.log(this.state);
+  getCommentBox(nextState, callback) {
+    callback(null, props => <CommentBox {...props} user={this.state.user} url="http://localhost:3000/comments" pollInterval={2000} />);
+  }
+
+  getNav(nextState, callback) {
     callback(null, props => <Nav {...props} user={this.state.user} />);
   }
 

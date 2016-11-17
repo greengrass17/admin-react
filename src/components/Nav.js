@@ -2,10 +2,11 @@ import React from 'react';
 import { Link } from 'react-router';
 
 class Nav extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    let username = `${this.props.user.Fname} ${this.props.user.Lname}`;
     this.state = {
-      username: ''
+      username: username
     };
   }
 
@@ -28,10 +29,6 @@ class Nav extends React.Component {
     )
   }
 
-  componentDidMount() {
-    let username = `${this.props.user.Fname} ${this.props.user.Lname}`;
-    this.setState({username});
-  }
 }
 
 Nav.defaultProps = {
