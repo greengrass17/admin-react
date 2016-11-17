@@ -14,6 +14,8 @@ let yeomanImage = require('../images/yeoman.png');
 class AppComponent extends React.Component {
   constructor() {
     super();
+    this.state = { user: {} };
+    this.getNavComp = this.getNavComp.bind(this);
     this.requireAuth = this.requireAuth.bind(this);
     this.logout = this.logout.bind(this);
   }
@@ -23,12 +25,17 @@ class AppComponent extends React.Component {
       <Router history={hashHistory}>
         <Route name="login" path="/login" component={Login} onEnter={this.logout}></Route>
         {/* hot fix for hook.length == 0 */}
-        <Route name="app" path="/" component={Nav} onEnter={(nextState, replace, cb) => this.requireAuth(nextState, replace, cb)}>
+        <Route name="app" path="/" getComponent={this.getNavComp} onEnter={(nextState, replace, cb) => this.requireAuth(nextState, replace, cb)}>
           {/* add the routes here */}
           <IndexRoute component={CommentBoxWrapper}></IndexRoute>
         </Route>
       </Router>
     );
+  }
+
+  getNavComp(nextState, callback) {
+    console.log(this.state);
+    callback(null, props => <Nav {...props} user={this.state.user} />);
   }
 
   logout(nextState, replace) {
@@ -50,6 +57,7 @@ class AppComponent extends React.Component {
         replace('/login');
         cb();
       } else {
+        this.setState({ user: res.body.data[0]});
         cb();
       }
     })
