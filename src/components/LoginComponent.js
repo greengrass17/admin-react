@@ -1,29 +1,29 @@
 require('styles/Login.scss');
 
 import React from 'react';
-import { withRouter } from 'react-router';
+import { hashHistory } from 'react-router';
 import request from 'superagent';
 
 class Login extends React.Component {
   constructor() {
     super();
-    this.state = {
-      user: '',
-      password: ''
-    };
+    this.userInput = {};
+    this.passwordInput = {};
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleUserChange = this.handleUserChange.bind(this);
-    this.handlePasswordChange = this.handlePasswordChange.bind(this);
   }
 
   render() {
     return (
       <form className="login-form" onSubmit={this.handleSubmit}>
         <div>
-          <input type="text" placeholder="Username" value={this.state.user} onChange={this.handleUserChange} />
+          <input type="text" ref={node => {
+            this.userInput = node
+          }} />
         </div>
         <div>
-          <input type="password" placeholder="Password" value={this.state.password} onChange={this.handlePasswordChange} />
+          <input type="password" ref={node => {
+            this.passwordInput = node
+          }} />
         </div>
         <div>
           <input type="submit" value="Login" />
@@ -34,27 +34,20 @@ class Login extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    let user = this.state.user.trim();
-    let password = this.state.password.trim();
+    let user = this.userInput.value.trim();
+    let password = this.passwordInput.value.trim();
     if (!user || !password) return;
     request.post('http://localhost:3000/v2/authentication/login')
     .send({ user: user, password: password })
     .set('Content-Type', 'application/x-www-form-urlencoded')
     .end((err, res) => {
       if (!err) {
-        window.sessionStorage.token = res.body.data;
-        this.props.router.push('/');
+        window.sessionStorage.token = res.body.data.token;
+        hashHistory.push('/');
       }
     })
   }
 
-  handleUserChange(e) {
-    this.setState({user: e.target.value});
-  }
-
-  handlePasswordChange(e) {
-    this.setState({password: e.target.value});
-  }
 }
 
-export default withRouter(Login);
+export default Login;

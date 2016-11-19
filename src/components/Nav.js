@@ -17,7 +17,7 @@ class Nav extends React.Component {
           <h2>{this.state.username}</h2>
 
           <ul className="col-md-2">
-            <li><Link to="/">Comment Box</Link></li>
+            <li><Link to="/">Dashboard</Link></li>
             <li><Link to="/login">Logout</Link></li>
           </ul>
         </div>
