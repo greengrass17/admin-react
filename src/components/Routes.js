@@ -3,7 +3,6 @@ require('styles/App.scss');
 
 import React, { PropTypes } from 'react';
 import {Router, Route, hashHistory, IndexRoute} from 'react-router';
-import request from 'superagent';
 
 import Nav from './Nav';
 import Dashboard from './DashboardComponent';
@@ -38,24 +37,21 @@ class AppComponent extends React.Component {
       cb();
       return;
     }
-    request.get('http://localhost:3000/v2/users')
-    .set('auth-token', token)
-    .end((err, res) => {
-      if (err) {
-        console.log(err);
-        replace('/login');
-        cb();
-      } else {
-        this.props.setUser(res);
-        cb();
-      }
-    })
+    this.props.fetchUser(token, user => {
+      this.props.setUser(user);
+      cb();
+    }, err => {
+      console.log(err);
+      replace('/login');
+      cb();
+    });
   }
 }
 
 AppComponent.defaultProps = {
   user: PropTypes.object.isRequired,
-  setUser: PropTypes.func.isRequired
+  setUser: PropTypes.func.isRequired,
+  fetchUser: PropTypes.func.isRequired
 };
 
 export default AppComponent;

@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { receiveUser } from '../actions';
+import { receiveUser, fetchUser } from '../actions';
 import Routes from '../components/Routes';
 
 const mapStateToProps = (state) => {
@@ -10,8 +10,11 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    setUser: (res) => {
-      dispatch(receiveUser(res))
+    setUser: (user) => {
+      dispatch(receiveUser(user))
+    },
+    fetchUser: (token, successCb, faillureCb) => {
+      dispatch(fetchUser(token, successCb, faillureCb))
     }
   }
 }

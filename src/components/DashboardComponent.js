@@ -1,11 +1,10 @@
 'use strict';
 
 import React from 'react';
-import request from 'superagent';
 import { connect } from 'react-redux';
 
 import GroupList from './GroupListComponent';
-import { receiveGroups } from '../actions'
+import { fetchGroups } from '../actions'
 
 require('styles/Dashboard.scss');
 
@@ -26,15 +25,7 @@ class Dashboard extends React.Component {
 
   getGroups() {
     const token = window.sessionStorage.token;
-    request.get('http://localhost:3000/v2/dashboard/get_groups')
-    .set('auth-token', token)
-    .end((err, res) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      this.props.dispatch(receiveGroups(res));
-    })
+    this.props.dispatch(fetchGroups(token));
   }
 }
 

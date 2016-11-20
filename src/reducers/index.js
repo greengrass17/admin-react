@@ -1,5 +1,5 @@
 import {
-  REQUEST_USER,
+  RECEIVE_GROUPS,
   RECEIVE_USER
 } from '../actions';
 
@@ -10,11 +10,11 @@ const initialState = {
 
 function mercuryApp(state = initialState, action) {
   switch (action.type) {
-    case 'RECEIVE_USER':
+    case RECEIVE_USER:
       return Object.assign({}, state, {
         user: action.user
       })
-    case 'RECEIVE_GROUPS':
+    case RECEIVE_GROUPS:
       return  Object.assign({}, state, {
         groups: action.groups
       })
