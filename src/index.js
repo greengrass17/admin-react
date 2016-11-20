@@ -9,6 +9,8 @@ import App from './components/Main';
 
 // Render the main component into the dom
 render(
-  <App />
+  <Provider store={createStore(mercuryApp)}>
+    <App />
+  </Provider>
   , document.getElementById('app')
 );

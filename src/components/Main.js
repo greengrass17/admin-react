@@ -3,23 +3,14 @@ require('styles/App.scss');
 
 import React from 'react';
 
-import Routes from './Routes';
+import UserRoutes from '../containers/UserRoutes';
 
 class AppComponent extends React.Component {
-  constructor() {
-    super();
-    this.state = { user: {} };
-    this.setUser = this.setUser.bind(this);
-  }
 
   render() {
     return (
-      <Routes user={this.state.user} setUser={this.setUser} />
+      <UserRoutes/>
     );
-  }
-
-  setUser(user) {
-    this.setState({ user: user })
   }
 
 }

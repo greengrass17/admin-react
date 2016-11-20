@@ -5,11 +5,23 @@ import {
 
 const initialState = {
   user: {},
-  // groups: []
+  groups: []
 }
 
 function mercuryApp(state = initialState, action) {
-  return state
+  switch (action.type) {
+    case 'RECEIVE_USER':
+      return Object.assign({}, state, {
+        user: action.user
+      })
+    case 'RECEIVE_GROUPS':
+      return  Object.assign({}, state, {
+        groups: action.groups
+      })
+    default:
+      return state
+
+  }
 }
 
 export default mercuryApp;

@@ -1,20 +1,15 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 class Nav extends React.Component {
-  constructor(props) {
-    super(props);
-    let username = `${this.props.user.Fname} ${this.props.user.Lname}`;
-    this.state = {
-      username: username
-    };
-  }
 
   render() {
+    let username = `${this.props.user.Fname} ${this.props.user.Lname}`;
+
     return (
       <div className="main row">
         <div>
-          <h2>{this.state.username}</h2>
+          <h2>{username}</h2>
 
           <ul className="col-md-2">
             <li><Link to="/">Dashboard</Link></li>
@@ -32,6 +27,7 @@ class Nav extends React.Component {
 }
 
 Nav.defaultProps = {
+  user: PropTypes.object.isRequired
 };
 
 

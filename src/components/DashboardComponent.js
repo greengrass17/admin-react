@@ -2,27 +2,20 @@
 
 import React from 'react';
 import request from 'superagent';
+import { connect } from 'react-redux';
+
+import GroupList from './GroupListComponent';
+import { receiveGroups } from '../actions'
 
 require('styles/Dashboard.scss');
 
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      groups: []
-    }
-  }
 
   render() {
-    let groupNodes = this.state.groups.map(group => {
-      return (
-        <p key={group.PartitionKey}>{group.PartitionKey}</p>
-      )
-    })
     return (
       <div className="dashboard-component">
         <h1>Dashboard</h1>
-        {groupNodes}
+        <GroupList groups={this.props.groups} />
       </div>
     );
   }
@@ -40,16 +33,15 @@ class Dashboard extends React.Component {
         console.log(err);
         return;
       }
-      // console.log(res.body.data);
-      this.setState({ groups: res.body.data });
+      this.props.dispatch(receiveGroups(res));
     })
   }
 }
-
-Dashboard.displayName = 'Dashboard';
 
 // Uncomment properties you need
 // Dashboard.propTypes = {};
 // Dashboard.defaultProps = {};
 
-export default Dashboard;
+export default connect(
+  state => ({ groups: state.groups })
+)(Dashboard);

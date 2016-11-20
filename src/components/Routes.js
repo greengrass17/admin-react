@@ -46,7 +46,7 @@ class AppComponent extends React.Component {
         replace('/login');
         cb();
       } else {
-        this.props.setUser(res.body.data[0]);
+        this.props.setUser(res);
         cb();
       }
     })

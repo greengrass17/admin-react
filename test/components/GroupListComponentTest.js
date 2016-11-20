@@ -7,16 +7,16 @@
 // import TestUtils from 'react-addons-test-utils';
 import createComponent from 'helpers/shallowRenderHelper';
 
-import LoginFormComponent from 'components//LoginFormComponent.js';
+import GroupListComponent from 'components//GroupListComponent.js';
 
-describe('LoginFormComponent', () => {
+describe('GroupListComponent', () => {
   let component;
 
   beforeEach(() => {
-    component = createComponent(LoginFormComponent);
+    component = createComponent(GroupListComponent);
   });
 
   it('should have its component name as default className', () => {
-    expect(component.props.className).to.equal('loginform-component');
+    expect(component.props.className).to.equal('grouplist-component');
   });
 });
